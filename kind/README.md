@@ -44,6 +44,7 @@ nodes:
 networking:
   podSubnet: "10.244.0.0/16"
   serviceSubnet: "10.96.0.0/12"
+  disableDefaultCNI: false # the default CNI will not be installed if it is configured to true
 EOF
 
 # connect the registry to the cluster network if not already connected
@@ -62,4 +63,6 @@ data:
     host: "localhost:${reg_port}"
     help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
 EOF
+
+kubectl taint node --all node-role.kubernetes.io/control-plane:NoSchedule-
 ```
